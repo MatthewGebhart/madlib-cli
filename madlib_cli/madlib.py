@@ -60,10 +60,13 @@ if __name__ == "__main__":
         collected_answers.append(answer)
 
     collected_answers = tuple(collected_answers)
-
+    new_lib = merge(stripped_string, collected_answers)
     print(f"""
     your new madlib:
-    {merge(stripped_string, collected_answers)}
+    {new_lib}
     
     Thanks for playing!
     """)
+
+    with open('../assets/new_lib.txt', 'w') as new_file:
+        new_file.write(new_lib)
