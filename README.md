@@ -18,5 +18,3 @@ from root folder - pytest
 
 Describe any tests that you did not complete, skipped, etc
 - all tests passing
-
-### credit to my classmate Tracy Oakley for help with the parse function
