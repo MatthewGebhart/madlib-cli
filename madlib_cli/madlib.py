@@ -10,7 +10,7 @@ Have {farts}!
 """)
 
 example = '../assets/dark_and_stormy_night_template.txt'
-example2 = '../assets/make_me_a_video_game.txt'
+example2 = '../assets/make_me_a_video_game_template.txt'
 
 def read_template(txt_file):
     try:
@@ -24,10 +24,27 @@ def read_template(txt_file):
 # print(read_template('../assets/dark_and_stormy_night_template.txt'))
 
 def parse_template(start_string):
-    stripped_string = start_string.replace("Adjective", "").replace("Noun", "")
-
-    pieces_string = start_string
+    pieces_string = ""
     pieces = []
+    is_a_piece = False
+    temp_piece = ""
+
+    for char in start_string:
+        if char == "{":
+            is_a_piece = True
+            pieces_string += char
+        elif char == "}":
+            is_a_piece = False
+            pieces_string += char
+            pieces.append(temp_piece)
+            temp_piece = ""
+        elif is_a_piece == True:
+            temp_piece += char
+        elif is_a_piece == False:
+            pieces_string += char
+
+    return pieces_string, tuple(pieces)
+
 
     while pieces_string.find("{") != -1:
         slice_open = pieces_string.find("{")
@@ -36,9 +53,8 @@ def parse_template(start_string):
         pieces_string = pieces_string[:slice_open] + pieces_string[slice_close+1:]
     # print(pieces)
     pieces = tuple(pieces)
-
-    # print(stripped_string)
-    # print(pieces)
+    print(pieces)
+    print(stripped_string)
     return (stripped_string, pieces)
 
 
@@ -52,14 +68,14 @@ def merge(empty_string, new_inputs):
 if __name__ == "__main__":
     welcome()
     collected_answers = []
-    (stripped_string, pieces) = parse_template(read_template(example))
+    (stripped_string, pieces) = parse_template(read_template(example2))
 
     for x in pieces:
         print(f"supply \"{x}\" ")
         answer = input("> ")
         collected_answers.append(answer)
 
-    collected_answers = tuple(collected_answers)
+    collected_answers = collected_answers
     new_lib = merge(stripped_string, collected_answers)
     print(f"""
     your new madlib:
